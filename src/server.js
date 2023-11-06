@@ -1,17 +1,14 @@
-const http = require('http');
+const Hapi = require('@hapi/hapi');
 
-const port = 9000;
-const host = 'localhost';
+const init = async () => {
+    const server = Hapi.server({
+        port: 9000,
+        host: 'localhost',
+    });
 
-const requestListener = (request, response) => {
-    response.setHeader('Content-Type', 'text/html');
+    await server.start();
 
-    response.statusCode = 200;
-    response.end('<h1>Halo HTTP Server!</h1>');
+    console.log(`Server is running on port ${server.info.uri}`);
 };
 
-const server = http.createServer(requestListener);
-
-server.listen(port, host, () => {
-    console.log(`Server is running on port: ${port}`);
-})
+init();
