@@ -205,7 +205,7 @@ const editBookByIdHandler = (request, h) => {
 
     const response = h.response({
         status: 'fail',
-        message: 'Gagal memperbarui buku, Id tidak ditemukan',
+        message: 'Gagal memperbarui buku. Id tidak ditemukan',
     });
     response.code(404);
     return response;
@@ -228,7 +228,7 @@ const deleteBookByIdHandler = (request, h) => {
     }
 
     const response = h.response({
-        status: 'success',
+        status: 'fail',
         message: 'Buku gagal dihapus. Id tidak ditemukan',
     });
     response.code(404);
