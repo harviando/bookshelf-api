@@ -77,29 +77,47 @@ const addBookHandler = (request, h) => {
 };
 
 const getAllBooksHandler = (request, h) => {
-    const { name } = request.query;
+    // Dapatkan query parameters dari request
+    const { name, reading, finished } = request.query;
 
-    // Filter book name
+    // Filter books berdasarkan query parameters
     let filteredBooks = books;
-    if (name) {
-        const searchName = name.toLowerCase();
 
-        filteredBooks = books.filter(book => book.name.toLowerCase().includes(searchName));
+    if (name) {
+        // Filter berdasarkan nama secara case-insensitive
+        filteredBooks = filteredBooks.filter((book) =>
+            book.name.toLowerCase().includes(name.toLowerCase()));
     }
 
-    // Returning the book (filtered or not)
-    const response = h.response({
+    if (reading === '0') {
+        // Filter buku yang sedang tidak dibaca
+        filteredBooks = filteredBooks.filter((book) => !book.reading);
+    } else if (reading === '1') {
+        // Filter buku yang sedang dibaca
+        filteredBooks = filteredBooks.filter((book) => book.reading);
+    }
+
+    if (finished === '0') {
+        // Filter buku yang belum selesai dibaca
+        filteredBooks = filteredBooks.filter((book) => !book.finished);
+    } else if (finished === '1') {
+        // Filter buku yang sudah selesai dibaca
+        filteredBooks = filteredBooks.filter((book) => book.finished);
+    }
+
+    // Transform filteredBooks menjadi format yang diinginkan
+    const formattedBooks = filteredBooks.map((book) => ({
+        id: book.id,
+        name: book.name,
+        publisher: book.publisher,
+    }));
+
+    return h.response({
         status: 'success',
         data: {
-            books: filteredBooks.map(book => ({
-                id: book.id,
-                name: book.name,
-                publisher: book.publisher,
-            })),
+            books: formattedBooks,
         },
     });
-    response.code(200);
-    return response;
 };
 
 const getBookByIdHandler = (request, h) => {
