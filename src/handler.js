@@ -80,33 +80,57 @@ const getAllBooksHandler = (request, h) => {
     // Dapatkan query parameters dari request
     const { name, reading, finished } = request.query;
 
-    // Filter books berdasarkan query parameters
-    let filteredBooks = books;
+    if (name !== undefined || reading !== undefined || finished !== undefined) {
+        // Filter books berdasarkan query parameters
+        let nameFilteredBooks = books;
+        let readingFilteredBooks = books;
+        let finishedFilteredBooks = books;
+        let resultBooks = [];
 
-    if (name) {
-        // Filter berdasarkan nama secara case-insensitive
-        filteredBooks = filteredBooks.filter((book) =>
-            book.name.toLowerCase().includes(name.toLowerCase()));
-    }
+        if (name) {
+            // Filter berdasarkan nama secara case-insensitive
+            nameFilteredBooks = nameFilteredBooks.filter((book) =>
+                book.name.toLowerCase().includes(name.toLowerCase()));
+            resultBooks.push(...nameFilteredBooks);
+        }
 
-    if (reading === '0') {
-        // Filter buku yang sedang tidak dibaca
-        filteredBooks = filteredBooks.filter((book) => !book.reading);
-    } else if (reading === '1') {
-        // Filter buku yang sedang dibaca
-        filteredBooks = filteredBooks.filter((book) => book.reading);
-    }
+        if (reading === '0') {
+            // Filter buku yang sedang tidak dibaca
+            readingFilteredBooks = readingFilteredBooks.filter((book) => !book.reading);
+            resultBooks.push(...readingFilteredBooks);
+        } else if (reading === '1') {
+            // Filter buku yang sedang dibaca
+            readingFilteredBooks = readingFilteredBooks.filter((book) => book.reading);
+            resultBooks.push(...readingFilteredBooks);
+        }
 
-    if (finished === '0') {
-        // Filter buku yang belum selesai dibaca
-        filteredBooks = filteredBooks.filter((book) => !book.finished);
-    } else if (finished === '1') {
-        // Filter buku yang sudah selesai dibaca
-        filteredBooks = filteredBooks.filter((book) => book.finished);
+        if (finished === '0') {
+            // Filter buku yang belum selesai dibaca
+            finishedFilteredBooks = finishedFilteredBooks.filter((book) => !book.finished);
+            resultBooks.push(...finishedFilteredBooks);
+        } else if (finished === '1') {
+            // Filter buku yang sudah selesai dibaca
+            finishedFilteredBooks = finishedFilteredBooks.filter((book) => book.finished);
+            resultBooks.push(...finishedFilteredBooks);
+        }
+
+        // Transform filteredBooks menjadi format yang diinginkan
+        const formattedBooks = resultBooks.map((book) => ({
+            id: book.id,
+            name: book.name,
+            publisher: book.publisher,
+        }));
+
+        return h.response({
+            status: 'success',
+            data: {
+                books: formattedBooks,
+            },
+        });
     }
 
     // Transform filteredBooks menjadi format yang diinginkan
-    const formattedBooks = filteredBooks.map((book) => ({
+    const formattedBooks = books.map((book) => ({
         id: book.id,
         name: book.name,
         publisher: book.publisher,
