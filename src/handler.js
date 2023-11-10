@@ -123,6 +123,15 @@ const getAllBooksHandler = (request, h) => {
             resultBooks.push(...finishedFilteredBooks);
         }
 
+        if (resultBooks.length <= 0) {
+            const response = h.response({
+                status: 'success',
+                message: 'There is no books to show. Try adding some books first.',
+            });
+            response.code(200);
+            return response;
+        }
+
         // Transform filteredBooks menjadi format yang diinginkan
         const formattedBooks = resultBooks.map((book) => ({
             id: book.id,
