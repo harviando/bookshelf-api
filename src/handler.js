@@ -77,6 +77,15 @@ const addBookHandler = (request, h) => {
 };
 
 const getAllBooksHandler = (request, h) => {
+    if (books.length <= 0) {
+        const response = h.response({
+            status: 'success',
+            message: 'There is no books to show. Try adding some books first.',
+        });
+        response.code(200);
+        return response;
+    }
+
     // Dapatkan query parameters dari request
     const { name, reading, finished } = request.query;
 
