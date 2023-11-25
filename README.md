@@ -1,8 +1,6 @@
 # Bookshelf API Description and Documentation
 
-## Introduction
-
-This repository houses the code for a Bookshelf API, providing various endpoints to manage a collection of books. Below are the available routes and their functionalities, along with instructions on how to test them.
+Bookshelf API provides various endpoints to manage a collection of books.
 
 ## Routes and Features
 
