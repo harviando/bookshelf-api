@@ -11,6 +11,19 @@ This repository houses the code for a Bookshelf API, providing various endpoints
 - **Route:** `POST /books`
 - **Description:** Creates a new book entry in the bookshelf.
 - **Usage:** Provide book details in the request payload.
+  - **Example Payload:**
+    ```json
+    {
+      "name": "Book Title",
+      "author": "Author Name",
+      "year": 2022,
+      "summary": "Brief summary of the book",
+      "publisher": "Publisher Name",
+      "pageCount": 250,
+      "readPage": 120,
+      "reading": true
+    }
+    ```
 
 ### 2. Get All Books
 
@@ -18,24 +31,40 @@ This repository houses the code for a Bookshelf API, providing various endpoints
 - **Description:** Retrieves all books from the bookshelf.
 - **Optional Query Parameters:** `name`, `reading`, `finished`.
 - **Usage:** Use query parameters for filtering based on book name, reading status, or finished status.
+  - **Example Usage:** `/books?name=Book&reading=1`
 
 ### 3. Get Book by ID
 
 - **Route:** `GET /books/{id}`
 - **Description:** Retrieves a specific book by its unique ID.
 - **Usage:** Replace `{id}` in the route with the book's ID.
+  - **Example Usage:** `/books/123`
 
 ### 4. Edit Book by ID
 
 - **Route:** `PUT /books/{id}`
 - **Description:** Modifies an existing book by its unique ID.
 - **Usage:** Replace `{id}` in the route with the book's ID and provide updated book details in the request payload.
+  - **Example Payload:**
+    ```json
+    {
+      "name": "Updated Book Title",
+      "author": "New Author Name",
+      "year": 2022,
+      "summary": "Updated summary of the book",
+      "publisher": "New Publisher Name",
+      "pageCount": 300,
+      "readPage": 150,
+      "reading": false
+    }
+    ```
 
 ### 5. Delete Book by ID
 
 - **Route:** `DELETE /books/{id}`
 - **Description:** Removes a specific book by its unique ID.
 - **Usage:** Replace `{id}` in the route with the book's ID.
+  - **Example Usage:** `/books/123`
 
 ## Testing the API
 
