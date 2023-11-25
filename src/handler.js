@@ -2,6 +2,16 @@
 const { nanoid } = require('nanoid');
 const books = require('./books');
 
+const indexHandler = (request, h) => {
+    const response = h.response({
+        status: 'success',
+        message: 'Welcome to bookshelf API! for details please visit https://github.com/harviando/bookshelf-api',
+        author: 'muhammad harviando - 2023'
+    });
+    response.code(200);
+    return response;
+};
+
 const addBookHandler = (request, h) => {
     const { name,
             year,
@@ -278,6 +288,7 @@ const deleteBookByIdHandler = (request, h) => {
 };
 
 module.exports = {
+    indexHandler,
     addBookHandler,
     getAllBooksHandler,
     getBookByIdHandler,

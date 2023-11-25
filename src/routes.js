@@ -1,5 +1,6 @@
 /* eslint-disable import/no-import-module-exports */
 const {
+    indexHandler,
     addBookHandler,
     getAllBooksHandler,
     getBookByIdHandler,
@@ -8,6 +9,11 @@ const {
 } = require('./handler');
 
 const routes = [
+    {
+        method: 'GET',
+        path: '/',
+        handler: indexHandler,
+    },
     {
         method: 'POST',
         path: '/books',
